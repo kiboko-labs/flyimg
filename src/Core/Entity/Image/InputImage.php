@@ -4,10 +4,8 @@ namespace Core\Entity\Image;
 
 use Core\Entity\OptionsBag;
 use Core\Entity\ImageMetaInfo;
-use Flyimg\Image\ImageInterface;
-use Flyimg\Image\RemoteImageInterface;
-use Flyimg\Image\RemoteURLImage;
-use Flyimg\Image\TemporaryStreamImage;
+use Imagine\Image\ImageInterface;
+use Imagine\Imagick\Image;
 
 /**
  * @deprecated see \Flyimg\Image\ImageInterface
@@ -15,14 +13,9 @@ use Flyimg\Image\TemporaryStreamImage;
 class InputImage
 {
     /**
-     * @var RemoteImageInterface
-     */
-    private $source;
-
-    /**
      * @var ImageInterface
      */
-    private $destination;
+    private $source;
 
     /**
      * @var OptionsBag
@@ -50,8 +43,7 @@ class InputImage
      */
     public function __construct(OptionsBag $optionsBag, string $sourceImageUrl)
     {
-        $this->source = new RemoteURLImage($sourceImageUrl);
-        $this->destination = new TemporaryStreamImage();
+        $this->source = (new \Imagick())->readImage($sourceImageUrl);
 
         $this->optionsBag = $optionsBag;
 
@@ -62,14 +54,6 @@ class InputImage
             ));
         $this->saveToTemporaryFile();
         $this->sourceImageInfo = new ImageMetaInfo($this->sourceImagePath);
-    }
-
-    /**
-     * Save given image to temporary file and return the path
-     */
-    protected function saveToTemporaryFile()
-    {
-        stream_copy_to_stream($this->source->asStream(), $this->destination->asStream());
     }
 
     /**
@@ -127,7 +111,7 @@ class InputImage
      */
     public function file(): ImageInterface
     {
-        return $this->destination;
+        return $this->source;
     }
 
     /**

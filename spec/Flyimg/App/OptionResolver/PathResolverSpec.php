@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Flyimg\Http\OptionResolver;
+namespace spec\Flyimg\App\OptionResolver;
 
-use Flyimg\Http\OptionResolver\PathResolver;
+use Flyimg\App\OptionResolver\PathResolver;
 use Flyimg\Image\Command\CommandFactoryInterface;
 use Flyimg\Image\Command\CommandInterface;
 use Flyimg\Image\CommandChain;

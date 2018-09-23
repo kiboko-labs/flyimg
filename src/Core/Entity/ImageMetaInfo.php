@@ -4,6 +4,7 @@ namespace Core\Entity;
 
 use Core\Exception\ExecFailedException;
 use Core\Processor\Processor;
+use Imagine\Imagick\Imagine;
 
 /**
  * Fetches and stores image properties like mimetype, bit depth, weight and dimensions.
@@ -20,6 +21,9 @@ class ImageMetaInfo
     /** @var string */
     protected $imagePath;
 
+    /** @var Imagine */
+    protected $image;
+
     /** @var string */
     protected $imageMimeType;
 
@@ -34,6 +38,7 @@ class ImageMetaInfo
     public function __construct(string $imagePath)
     {
         $this->imagePath = $imagePath;
+        $this->image = (new Imagine())->open($imagePath);
     }
 
     /**

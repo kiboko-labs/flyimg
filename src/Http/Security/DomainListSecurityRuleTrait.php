@@ -8,7 +8,7 @@ trait DomainListSecurityRuleTrait
 
     public function addDomain(string $domain): void
     {
-        $this->domains[] = parse_url($domain, PHP_URL_HOST);
+        $this->domains[] = $domain;
     }
 
     public function hasDomains(): bool
@@ -29,8 +29,8 @@ trait DomainListSecurityRuleTrait
     private function isDomainInList(string $url): bool
     {
         $domain = parse_url($url, PHP_URL_HOST);
-        foreach ($this->walkDomains() as $blacklistedDomain) {
-            if ($blacklistedDomain === $domain) {
+        foreach ($this->walkDomains() as $listedDomain) {
+            if ($listedDomain === $domain) {
                 return true;
             }
         }

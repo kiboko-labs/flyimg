@@ -7,11 +7,25 @@ use Flyimg\Image\FaceDetection\FacedetectShell;
 use Imagine\Exception as ImagineException;
 use Flyimg\Exception as FlyimgException;
 use Imagine\Imagick\Imagine;
+use League\Flysystem\MountManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class PathExpressionController extends Controller
 {
+    /**
+     * @var MountManager
+     */
+    private $filesystems;
+
+    /**
+     * @param MountManager $filesystems
+     */
+    public function __construct(MountManager $filesystems)
+    {
+        $this->filesystems = $filesystems;
+    }
+
     /**
      * @param string $options
      * @param string $imageSrc

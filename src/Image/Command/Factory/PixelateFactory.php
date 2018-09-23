@@ -4,7 +4,6 @@ namespace Flyimg\Image\Command\Factory;
 
 use Flyimg\Image\Command\CommandFactoryInterface;
 use Flyimg\Image\Command\CommandInterface;
-use Flyimg\Image\Command\CropCommand;
 use Flyimg\Image\Command\PixelateCommand;
 use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;

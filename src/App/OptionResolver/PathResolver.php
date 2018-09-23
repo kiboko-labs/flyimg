@@ -75,9 +75,12 @@ class PathResolver implements OptionResolverInterface
 
         foreach ($options as $option => $values) {
             if (!isset($this->commandFactories[$option])) {
-                throw new InvalidArgumentException(
-                    'The specified action filter does not exist.'
-                );
+                throw new InvalidArgumentException(strtr(
+                    'The specified action filter "%filter%" does not exist.',
+                    [
+                        '%filter%' => $option,
+                    ]
+                ));
             }
 
             $chain->add($this->commandFactories[$option]->build(...$values));

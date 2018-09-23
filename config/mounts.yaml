@@ -1,0 +1,10 @@
+services:
+#  flyimg.filesystem.aws_s3:
+#    class: League\Flysystem\AwsS3v3\AwsS3Adapter
+#    tags:
+#      - { name: flyimg.filesystem, alias: s3 }
+
+#  flyimg.filesystem.pim:
+#    class: League\Flysystem\AwsS3v3\AwsS3Adapter
+#    tags:
+#      - { name: flyimg.filesystem, alias: pim }

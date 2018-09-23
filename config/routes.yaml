@@ -15,13 +15,13 @@ default_expression_path:
       imageSrc: .+
 
 filter_expression_upload:
-   path : /f/upload/{options}/{imageSrc}
+   path : /f/upload/{filtersSpec}/{imageSrc}
    defaults: { _controller: 'Flyimg\App\Controller\FilterExpressionController::uploadAction', imageSrc: '' }
    requirements:
       imageSrc: .+
 
 filter_expression_path:
-   path : /f/path/{options}/{imageSrc}
+   path : /f/path/{filtersSpec}/{imageSrc}
    defaults: { _controller: 'Flyimg\App\Controller\FilterExpressionController::pathAction', imageSrc: '' }
    requirements:
       imageSrc: .+

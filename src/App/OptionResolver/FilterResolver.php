@@ -43,16 +43,17 @@ class FilterResolver implements OptionResolverInterface
     ): self {
         return new static(
             [
-                'resize' => new CommandFactory\ResizeFactory($imagine),
-                'width' => new CommandFactory\ResizeByWidthFactory($imagine),
-                'height' => new CommandFactory\ResizeByHeightFactory($imagine),
-                'crop' => new CommandFactory\CropFactory($imagine),
                 'blur' => new CommandFactory\BlurFactory($imagine),
-                'square' => new CommandFactory\DrawSquareFactory($imagine),
+                'crop' => new CommandFactory\CropFactory($imagine),
                 'face.blur' => new CommandFactory\FaceBlurBatchFactory($imagine, $faceDetection),
                 'face.detect' => new CommandFactory\FaceDetectBatchFactory($imagine, $faceDetection),
                 'face.pixelate' => new CommandFactory\FacePixelateBatchFactory($imagine, $faceDetection),
+                'format' => new CommandFactory\FormatFactory($imagine),
+                'height' => new CommandFactory\ResizeByHeightFactory($imagine),
                 'pixelate' => new CommandFactory\PixelateFactory($imagine),
+                'resize' => new CommandFactory\ResizeFactory($imagine),
+                'square' => new CommandFactory\DrawSquareFactory($imagine),
+                'width' => new CommandFactory\ResizeByWidthFactory($imagine),
             ],
             new Lexer()
         );

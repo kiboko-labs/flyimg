@@ -2,13 +2,9 @@
 
 namespace Flyimg\App\Command;
 
-use Flyimg\Image\Command\BlurCommand;
-use Flyimg\Image\Command\FaceBlurBatchCommand;
-use Flyimg\Image\Command\PixelateCommand;
-use Flyimg\Image\CommandChain;
+use Flyimg\App\OptionResolver\FilterResolver;
+use Flyimg\FilterExpression\Lexer\Lexer;
 use Flyimg\Image\FaceDetection\FacedetectShell;
-use Imagine\Image\Box;
-use Imagine\Image\Point;
 use Imagine\Imagick\Imagine;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -27,35 +23,19 @@ class DownloadCommand extends ContainerAwareCommand
     {
         $this
             ->addArgument('url', InputArgument::IS_ARRAY)
-            ->addOption('width', 'W', InputOption::VALUE_OPTIONAL, 'Resize image to specified width, in pixels.')
-            ->addOption('height', 'H', InputOption::VALUE_OPTIONAL, 'Resize image to specified height, in pixels.')
+            ->addOption('filter', 'f', InputOption::VALUE_OPTIONAL, 'Apply filters to the specified image.')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $imagine = new Imagine();
-        $chain = new CommandChain(
-            new PixelateCommand(
-                $imagine,
-                new Point(50, 50),
-                new Box(250, 250)
-            ),
-            new BlurCommand(
-                $imagine,
-                new Point(350, 50),
-                new Box(250, 250)
-            ),
-            new FaceBlurBatchCommand(
-                $imagine,
-                new FacedetectShell()
-            )
-        );
+        $filters = FilterResolver::buildStandard($imagine, new FacedetectShell());
 
         foreach ($input->getArgument('url') as $imageSrc) {
             $source = $imagine->open($imageSrc);
 
-            $source = $chain->execute($source);
+            $source = $filters->resolve($input->getOption('filter'))->execute($source);
 
             $source->save($filename = (__DIR__ . '/' . uniqid('flyimg.') . '.png'));
 

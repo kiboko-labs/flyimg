@@ -36,9 +36,9 @@ class PixelateCommand implements CommandInterface
     private $dimension;
 
     /**
+     * @param ImagineInterface $imagine
      * @param BoxInterface     $box
      * @param PointInterface   $start
-     * @param ImagineInterface $imagine
      * @param int              $dimension
      */
     public function __construct(
