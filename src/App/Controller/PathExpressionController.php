@@ -2,28 +2,25 @@
 
 namespace Flyimg\App\Controller;
 
-use Flyimg\App\OptionResolver\PathResolver;
-use Flyimg\Image\FaceDetection\FacedetectShell;
-use Imagine\Exception as ImagineException;
-use Flyimg\Exception as FlyimgException;
-use Imagine\Imagick\Imagine;
-use League\Flysystem\MountManager;
+use Flyimg\App\ImageManipulator;
+use Imagine\Exception\InvalidArgumentException;
+use League\Flysystem\FileExistsException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 class PathExpressionController extends Controller
 {
     /**
-     * @var MountManager
+     * @var ImageManipulator
      */
-    private $filesystems;
+    private $imageManipulator;
 
     /**
-     * @param MountManager $filesystems
+     * @param ImageManipulator $imageManipulator
      */
-    public function __construct(MountManager $filesystems)
+    public function __construct(ImageManipulator $imageManipulator)
     {
-        $this->filesystems = $filesystems;
+        $this->imageManipulator = $imageManipulator;
     }
 
     /**
@@ -34,21 +31,16 @@ class PathExpressionController extends Controller
      */
     public function uploadAction(string $options, string $imageSrc = null): Response
     {
-        $imagine = new Imagine();
-        $resolver = PathResolver::buildStandard($imagine, new FacedetectShell());
-
         try {
-            $source = $imagine->open($imageSrc);
-
-            $source = $resolver->resolve($options)->execute($source);
-        } catch (ImagineException\InvalidArgumentException $e) {
+            $file = $this->imageManipulator->execute($options, $imageSrc);
+        } catch (FileExistsException $e) {
+            return new Response($e->getMessage(), 500);
+        } catch (InvalidArgumentException $e) {
             return new Response('', 404);
-        } catch (FlyimgException\InvalidArgumentException $e) {
-            return new Response($e->getMessage(), 400);
         }
 
-        return new Response($source->get($source->metadata()['format']), 200, [
-            'Content-Type' => 'image/png',
+        return new Response($file->read(), 200, [
+            'Content-Type' => $file->mimeType(),
         ]);
     }
 

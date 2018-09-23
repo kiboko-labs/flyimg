@@ -10,11 +10,7 @@ services:
             $mountManager: '@flyimg.mount_manager'
             $realPath: '%local_root_path%'
             $localPrefix: 'local'
-
-    flyimg.adapter.local:
-        class: League\Flysystem\Adapter\Local
-        arguments:
-            $root: '%local_root_path%'
+            $storePrefix: 'store'
 
     flyimg.filesystem.local:
         class: League\Flysystem\Filesystem
@@ -23,47 +19,9 @@ services:
         tags:
             - { name: flyimg.filesystem, alias: local }
 
-    flyimg.adapter.store:
-        class: League\Flysystem\Adapter\Local
-        arguments:
-            $root: '%kernel.project_dir%/public/store'
-
     flyimg.filesystem.store:
         class: League\Flysystem\Filesystem
         arguments:
             - '@flyimg.adapter.store'
         tags:
             - { name: flyimg.filesystem, alias: store }
-
-    flyimg.security.http:
-        class: Flyimg\Http\Security\WhitelistSecurityRule
-        arguments:
-            - '%whitelist_domains%'
-
-    flyimg.adapter.http:
-        class: Flyimg\Http\Adapter
-        arguments:
-            $securityRule: '@flyimg.security.http'
-            $context: []
-            $isSecure: false
-
-    flyimg.adapter.https:
-        class: Flyimg\Http\Adapter
-        arguments:
-            $securityRule: '@flyimg.security.http'
-            $context: []
-            $isSecure: true
-
-    flyimg.filesystem.http:
-        class: League\Flysystem\Filesystem
-        arguments:
-            - '@flyimg.adapter.http'
-        tags:
-            - { name: flyimg.filesystem, alias: http }
-
-    flyimg.filesystem.https:
-        class: League\Flysystem\Filesystem
-        arguments:
-            - '@flyimg.adapter.https'
-        tags:
-            - { name: flyimg.filesystem, alias: https }

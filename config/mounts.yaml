@@ -1,10 +1,43 @@
 services:
-#  flyimg.filesystem.aws_s3:
-#    class: League\Flysystem\AwsS3v3\AwsS3Adapter
-#    tags:
-#      - { name: flyimg.filesystem, alias: s3 }
+    flyimg.adapter.local:
+        class: League\Flysystem\Adapter\Local
+        arguments:
+            $root: '%local_root_path%'
 
-#  flyimg.filesystem.pim:
-#    class: League\Flysystem\AwsS3v3\AwsS3Adapter
-#    tags:
-#      - { name: flyimg.filesystem, alias: pim }
+    flyimg.adapter.store:
+        class: League\Flysystem\Adapter\Local
+        arguments:
+            $root: '%kernel.project_dir%/public/store'
+
+    flyimg.security.http:
+        class: Flyimg\Http\Security\WhitelistSecurityRule
+        arguments:
+            - '%whitelist_domains%'
+
+    flyimg.adapter.http:
+        class: Flyimg\Http\Adapter
+        arguments:
+            $securityRule: '@flyimg.security.http'
+            $context: []
+            $isSecure: false
+
+    flyimg.adapter.https:
+        class: Flyimg\Http\Adapter
+        arguments:
+            $securityRule: '@flyimg.security.http'
+            $context: []
+            $isSecure: true
+
+    flyimg.filesystem.http:
+        class: League\Flysystem\Filesystem
+        arguments:
+            - '@flyimg.adapter.http'
+        tags:
+            - { name: flyimg.filesystem, alias: http }
+
+    flyimg.filesystem.https:
+        class: League\Flysystem\Filesystem
+        arguments:
+            - '@flyimg.adapter.https'
+        tags:
+            - { name: flyimg.filesystem, alias: https }

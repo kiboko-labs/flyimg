@@ -35,29 +35,37 @@ class ImageManipulator
     private $localPrefix;
 
     /**
+     * @var string
+     */
+    private $storePrefix;
+
+    /**
      * @param ImagineInterface        $imagine
      * @param OptionResolverInterface $optionResolver
      * @param MountManager            $mountManager
      * @param string                  $realPath
      * @param string                  $localPrefix
+     * @param string                  $storePrefix
      */
     public function __construct(
         ImagineInterface $imagine,
         OptionResolverInterface $optionResolver,
         MountManager $mountManager,
         string $realPath,
-        string $localPrefix = 'local'
+        string $localPrefix = 'local',
+        string $storePrefix = 'store'
     ) {
         $this->imagine = $imagine;
         $this->optionsResolver = $optionResolver;
         $this->mountManager = $mountManager;
         $this->realPath = $realPath;
         $this->localPrefix = $localPrefix;
+        $this->storePrefix = $storePrefix;
     }
 
     private function hash(string $filterSpec, string $sourceUrl): string
     {
-        return 'store://' . strtr(base64_encode(
+        return $this->storePrefix . '://' . strtr(base64_encode(
             hash('sha256', $filterSpec, true) . hash('sha512', $sourceUrl, true)
         ), '+/=', '._-');
     }
