@@ -2,11 +2,8 @@
 
 namespace Flyimg\App\Controller;
 
-use Flyimg\App\Filesystem;
-use Flyimg\App\OptionResolver\FilterResolver;
-use Flyimg\Image\FaceDetection\FacedetectShell;
+use Flyimg\App\ImageManipulator;
 use Imagine\Exception\InvalidArgumentException;
-use Imagine\Imagick\Imagine;
 use League\Flysystem\FileExistsException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,16 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 class FilterExpressionController extends Controller
 {
     /**
-     * @var Filesystem
+     * @var ImageManipulator
      */
-    private $filesystem;
+    private $imageManipulator;
 
     /**
-     * @param Filesystem $filesystem
+     * @param ImageManipulator $imageManipulator
      */
-    public function __construct(Filesystem $filesystem)
+    public function __construct(ImageManipulator $imageManipulator)
     {
-        $this->filesystem = $filesystem;
+        $this->imageManipulator = $imageManipulator;
     }
 
     /**
@@ -34,23 +31,16 @@ class FilterExpressionController extends Controller
      */
     public function uploadAction(string $filtersSpec, string $imageSrc = null): Response
     {
-        $imagine = new Imagine();
-        $resolver = FilterResolver::buildStandard($imagine, new FacedetectShell());
-
         try {
-            $imagePath = $this->filesystem->localCopy($imageSrc);
-
-            $source = $imagine->open($imagePath);
+            $file = $this->imageManipulator->execute($filtersSpec, $imageSrc);
         } catch (FileExistsException $e) {
             return new Response($e->getMessage(), 500);
         } catch (InvalidArgumentException $e) {
             return new Response('', 404);
         }
 
-        $source = $resolver->resolve($filtersSpec)->execute($source);
-
-        return new Response($source->get($source->metadata()['format']), 200, [
-            'Content-Type' => 'image/png',
+        return new Response($file->read(), 200, [
+            'Content-Type' => $file->mimeType(),
         ]);
     }
 

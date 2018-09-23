@@ -2,7 +2,6 @@
 
 namespace Flyimg\Image\FaceDetection;
 
-use Flyimg\Image\ShortLivedStreamedFile;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;

@@ -1,7 +1,7 @@
 parameters:
 
   locale: 'en'
-  local_root_path: '%kernel.root_dir%/var/tmp'
+  local_root_path: '%kernel.project_dir%/var/tmp'
 
   application_name: Flyimg.io
 

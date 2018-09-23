@@ -27,3 +27,15 @@ services:
     Flyimg\App\Controller\:
         resource: '../src/App/Controller/*'
         tags: ['controller.service_arguments']
+
+    Flyimg\Image\FaceDetection\FaceDetectionInterface: '@Flyimg\Image\FaceDetection\FacedetectShell'
+
+    Flyimg\App\OptionResolver\FilterResolver:
+        factory: ['Flyimg\App\OptionResolver\FilterResolver', buildStandard]
+
+    Flyimg\App\OptionResolver\OptionResolverInterface: '@Flyimg\App\OptionResolver\FilterResolver'
+
+    Imagine\Imagick\Imagine:
+        autowire: true
+
+    Imagine\Image\ImagineInterface: '@Imagine\Imagick\Imagine'
