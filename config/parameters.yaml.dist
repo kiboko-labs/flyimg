@@ -33,6 +33,12 @@ parameters:
   # Number of threads for Imagemagick to use
   thread: 1
 
+  akeneo.url: 'https://xxx.cloud.akeneo.com'
+  akeneo.username: ''
+  akeneo.password: ''
+  akeneo.client_id: ''
+  akeneo.client_secret: ''
+
   #In case storage_system: s3, you need to add those AWS S3 parameters:
   aws_s3:
     access_id: ""
