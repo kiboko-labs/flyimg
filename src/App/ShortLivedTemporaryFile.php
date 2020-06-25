@@ -2,6 +2,7 @@
 
 namespace Flyimg\App;
 
+use League\Flysystem\FileNotFoundException;
 use League\Flysystem\MountManager;
 
 class ShortLivedTemporaryFile implements FileInterface
@@ -46,7 +47,11 @@ class ShortLivedTemporaryFile implements FileInterface
 
     public function __destruct()
     {
-        $this->mountManager->delete($this->toFlysystem());
+        try {
+            $this->mountManager->delete($this->toFlysystem());
+        } catch (FileNotFoundException $exception) {
+            // FIXME: Do not ignore silently
+        }
     }
 
     public function toFlysystem(): string

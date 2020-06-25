@@ -34,6 +34,7 @@ class Adapter implements AdapterInterface
             [
                 'stream' => $stream = $this->client->getProductMediaFileApi()
                     ->download($path)
+                    ->getBody()
                     ->detach(),
                 'contents' => stream_get_contents($stream),
             ]
@@ -47,6 +48,7 @@ class Adapter implements AdapterInterface
             [
                 'stream' => $this->client->getProductMediaFileApi()
                     ->download($path)
+                    ->getBody()
                     ->detach(),
             ]
         );

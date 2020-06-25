@@ -40,10 +40,10 @@ services:
   Akeneo\Pim\ApiClient\AkeneoPimClient:
     factory: [ '@Akeneo\Pim\ApiClient\AkeneoPimClientBuilder', 'buildAuthenticatedByPassword' ]
     arguments:
-      - '%akeneo.username%'
-      - '%akeneo.password%'
       - '%akeneo.client_id%'
       - '%akeneo.client_secret%'
+      - '%akeneo.username%'
+      - '%akeneo.password%'
 
   flyimg.filesystem.http:
     class: League\Flysystem\Filesystem
