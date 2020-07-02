@@ -142,13 +142,40 @@ class Adapter implements AdapterInterface
             $options['http']['method'] = 'HEAD';
         }
 
-        stream_context_set_default($options);
+        $url = $this->url($path);
+        $urlParts = parse_url($url);
 
-        $headers = get_headers($this->url($path), 1);
+        for ($redirects = 0; $redirects < 3; $redirects++) {
+            stream_context_set_default($options);
 
-        stream_context_set_default($defaults);
+            $headers = get_headers($url, 1);
 
-        if ($headers === false || strpos($headers[0], ' 200') === false) {
+            stream_context_set_default($defaults);
+
+            if ($headers === false) {
+                return false;
+            }
+
+            if (strpos($headers[0], ' 302') !== false) {
+                $url = array_change_key_case($headers)['location'];
+                $urlParts = array_merge(
+                    [
+                        'scheme' => $urlParts['scheme'],
+                        'host' => $urlParts['host'],
+                        'path' => $urlParts['path'],
+                    ],
+                    parse_url($url)
+                );
+                $url = $this->buildUrl($urlParts);
+                continue;
+            }
+
+            if (strpos($headers[0], ' 200') === false) {
+                return false;
+            }
+        }
+
+        if ($headers === false) {
             return false;
         }
 
@@ -260,6 +287,20 @@ class Adapter implements AdapterInterface
     private function url(string $path)
     {
         return ($this->isSecure ? 'https://' : 'http://') . $path;
+    }
+
+    private function buildUrl(array $parts)
+    {
+        return (isset($parts['scheme']) ? "{$parts['scheme']}:" : '') .
+            ((isset($parts['user']) || isset($parts['host'])) ? '//' : '') .
+            (isset($parts['user']) ? "{$parts['user']}" : '') .
+            (isset($parts['pass']) ? ":{$parts['pass']}" : '') .
+            (isset($parts['user']) ? '@' : '') .
+            (isset($parts['host']) ? "{$parts['host']}" : '') .
+            (isset($parts['port']) ? ":{$parts['port']}" : '') .
+            (isset($parts['path']) ? "{$parts['path']}" : '') .
+            (isset($parts['query']) ? "?{$parts['query']}" : '') .
+            (isset($parts['fragment']) ? "#{$parts['fragment']}" : '');
     }
 
     /**
