@@ -10,9 +10,9 @@ services:
       $root: '%kernel.project_dir%/public/store'
 
   flyimg.security.http:
-    class: Flyimg\Http\Security\WhitelistSecurityRule
+    class: Flyimg\Http\Security\AllowedDomainsSecurityRule
     arguments:
-      - '%whitelist_domains%'
+      - '%allowed_domains%'
 
   flyimg.adapter.http:
     class: Flyimg\Http\Adapter

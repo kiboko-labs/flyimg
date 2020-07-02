@@ -24,7 +24,7 @@ parameters:
   restricted_domains: false
 
   # if restricted_domains is enabled, put whitelist domains here
-  whitelist_domains:
+  allowed_domains:
       - cdn.juniata.edu
 
   # Default storage system is local, to use use AWS S3, change this param to s3

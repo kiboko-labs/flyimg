@@ -2,7 +2,7 @@
 
 namespace Flyimg\Http\Security;
 
-class BlacklistSecurityRule implements DomainBasedRuleInterface
+class DeniedDomainsSecurityRule implements DomainBasedRuleInterface
 {
     use DomainListSecurityRuleTrait;
 

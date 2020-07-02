@@ -2,7 +2,7 @@
 
 namespace Flyimg\Http\Security;
 
-class WhitelistSecurityRule implements DomainBasedRuleInterface
+class AllowedDomainsSecurityRule implements DomainBasedRuleInterface
 {
     use DomainListSecurityRuleTrait;
 
