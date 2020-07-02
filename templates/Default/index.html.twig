@@ -25,14 +25,11 @@
 
             <div class="masthead clearfix">
                 <div class="inner">
-                    <h3 class="masthead-brand">Flyimg 2.0</h3>
+                    <h3 class="masthead-brand"><img src="/upload/width(100)/https://raw.githubusercontent.com/flyimg/graphic-assets/master/logo/raster/flyimg-logo-rgb.png"> 2.0</h3>
                 </div>
             </div>
 
             <div class="inner cover">
-                <p>
-                    <img src="/upload/width(100)/https://raw.githubusercontent.com/flyimg/graphic-assets/master/logo/raster/flyimg-logo-rgb.png">
-                </p>
                 <h2 id="hello-from-flyimg">Hello from Flyimg 2.0</h2>
 
                 <h3 id="the-image-above-logo-has-been-served-using-flyimg.">The image above (logo) has been served using
@@ -64,6 +61,105 @@
                         <li><em>square ( int x, int y, int width, int height, int red, int green, int blue, int alpha, int thickness )</em> draw a square in the image</li>
                         <li><em>width ( int width )</em> resize the image proportionally, with the specified width</li>
                     </ul>
+                </p>
+
+                <h3>Blur a square in your image</h3>
+
+                <p><em>blur ( int x, int y, int width, int height )</em></p>
+
+                <p>
+                    <code>/upload/blur(0,0,100,100)/https://loremflickr.com/320/240/paris,woman/all</code>
+                    <img src="/upload/blur(0,0,100,100)/https://loremflickr.com/320/240/paris,woman/all">
+                </p>
+
+                <h3>Crop a part of the image</h3>
+
+                <p><em>crop ( int x, int y, int width, int height )</em></p>
+
+                <p>
+                    <code>/upload/crop(0,0,100,100)/https://loremflickr.com/320/240/paris,woman/all</code>
+                    <img src="/upload/crop(0,0,100,100)/https://loremflickr.com/320/240/paris,woman/all">
+                </p>
+
+                <h3>Detect faces and blur those faces in the image</h3>
+
+                <p><em>face.blur ( )</em></p>
+
+                <p>
+                    <code>/upload/face.blur()/https://loremflickr.com/320/240/paris,woman/all</code>
+                    <img src="/upload/face.blur()/https://loremflickr.com/320/240/paris,woman/all">
+                </p>
+
+                <h3>Detect faces in the image, and draw a rectangle around them</h3>
+
+                <p><em>face.detect ( int thickness )</em></p>
+
+                <p>
+                    <code>/upload/face.detect(10)/https://loremflickr.com/320/240/paris,woman/all</code>
+                    <img src="/upload/face.detect(10)/https://loremflickr.com/320/240/paris,woman/all">
+                </p>
+
+                <h3>Detect faces in the image, and pixelate them inside the image</h3>
+
+                <p><em>face.pixelate ( )</em></p>
+
+                <p>
+                    <code>/upload/face.pixelate(10)/https://loremflickr.com/320/240/paris,woman/all</code>
+                    <img src="/upload/face.pixelate(10)/https://loremflickr.com/320/240/paris,woman/all">
+                </p>
+
+                <h3>Change the format of the image</h3>
+
+                <p><em>format ( string format )</em></p>
+
+                <p>
+                    <code>/upload/format('jpeg')/https://loremflickr.com/320/240/paris,woman/all</code>
+                    <img src="/upload/format('jpeg')/https://loremflickr.com/320/240/paris,woman/all">
+                </p>
+
+                <h3>Resize the image proportionally, with the specified height</h3>
+
+                <p><em>height ( int height )</em></p>
+
+                <p>
+                    <code>/upload/height(100)/https://loremflickr.com/320/240/paris,woman/all</code>
+                    <img src="/upload/height(100)/https://loremflickr.com/320/240/paris,woman/all">
+                </p>
+
+                <h3>Pixelate a sqare inside the image</h3>
+
+                <p><em>pixelate ( int x, int y, int width, int height, int dimension )</em></p>
+
+                <p>
+                    <code>/upload/pixelate(0,0,100,100,10)/https://loremflickr.com/320/240/paris,woman/all</code>
+                    <img src="/upload/pixelate(0,0,100,100,10)/https://loremflickr.com/320/240/paris,woman/all">
+                </p>
+
+                <h3>Resize the image without keeping proportions, with the specified width and height</h3>
+
+                <p><em>resize ( int width, int height )</em></p>
+
+                <p>
+                    <code>/upload/resize(100,100)/https://loremflickr.com/320/240/paris,woman/all</code>
+                    <img src="/upload/resize(100,100)/https://loremflickr.com/320/240/paris,woman/all">
+                </p>
+
+                <h3>Draw a square in the image</h3>
+
+                <p><em>square ( int x, int y, int width, int height, int red, int green, int blue, int alpha, int thickness )</em></p>
+
+                <p>
+                    <code>/upload/square(50,50,100,100,128,0,0,100,5)/https://loremflickr.com/320/240/paris,woman/all</code>
+                    <img src="/upload/square(50,50,100,100,128,0,0,100,5)/https://loremflickr.com/320/240/paris,woman/all">
+                </p>
+
+                <h3>Resize the image proportionally, with the specified width</h3>
+
+                <p><em>width ( int width )</em></p>
+
+                <p>
+                    <code>/upload/width(100)/https://loremflickr.com/320/240/paris,woman/all</code>
+                    <img src="/upload/width(100)/https://loremflickr.com/320/240/paris,woman/all">
                 </p>
 
                 <p><a href="https://github.com/kiboko-labs/flyimg" target="_blank">Check the docs for more info</a>.</p>

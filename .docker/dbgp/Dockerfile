@@ -4,9 +4,9 @@ MAINTAINER Grégory Planchat <gregory@kiboko.fr>
 
 RUN set -ex \
     && apk add \
-        py-pip \
-    && pip2 install --upgrade pip \
-    && pip2 install komodo-python-dbgp
+        py3-pip \
+    && pip install --upgrade pip \
+    && pip install komodo-python3-dbgp
 
 CMD /usr/bin/pydbgpproxy -d 0.0.0.0:9000 -i 0.0.0.0:9001
 
