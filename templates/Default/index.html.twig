@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title>Flyimg App</title>
+    <title>Flyimg 2.0</title>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css" crossorigin="anonymous">
 
@@ -25,25 +25,24 @@
 
             <div class="masthead clearfix">
                 <div class="inner">
-                    <h3 class="masthead-brand">Flyimg App</h3>
-
+                    <h3 class="masthead-brand">Flyimg 2.0</h3>
                 </div>
             </div>
 
             <div class="inner cover">
                 <p>
-                    <img src="/upload/w_300/https://raw.githubusercontent.com/flyimg/graphic-assets/master/logo/raster/flyimg-logo-rgb.png">
+                    <img src="/upload/width(100)/https://raw.githubusercontent.com/flyimg/graphic-assets/master/logo/raster/flyimg-logo-rgb.png">
                 </p>
-                <h2 id="hello-from-flyimg">Hello from Flyimg</h2>
+                <h2 id="hello-from-flyimg">Hello from Flyimg 2.0</h2>
 
                 <h3 id="the-image-above-logo-has-been-served-using-flyimg.">The image above (logo) has been served using
-                    flyimg.</h3>
+                    the Content Delivery Platform.</h3>
 
-                <p>how? Calling the source in the <code>&lt;img&gt;</code> like this:</p>
+                <p>How? Calling the source in the <code>&lt;img&gt;</code> like this:</p>
 
-                <code>/upload/w_300/https://raw.githubusercontent.com/flyimg/graphic-assets/master/logo/raster/flyimg-logo-rgb.png</code>
+                <code>/upload/width(100)/https://raw.githubusercontent.com/flyimg/graphic-assets/master/logo/raster/flyimg-logo-rgb.png</code>
 
-                <p>It got transformed from the original file which was 6000px wide!</p>
+                <p>It got transformed from the original file which was 343px wide.</p>
                 <p>Now, on the server, there is a cached version of this transformed image. There is no need to do the
                     transformation again next time someone requests this image.</p>
                 <p>The best of all is that you get <em>Moz-jpeg</em> compression by default on all your JPEGs.</p>
@@ -51,22 +50,24 @@
 
                 <h2 id="transformations">Transformations</h2>
 
-                <p>You can do many different transformations to you images, like: <strong>quality</strong>,
-                    <strong>face-crop</strong>, <strong>face-blur</strong>, <strong>width</strong>,
-                    <strong>height</strong>,
-                    <strong>crop</strong>, <strong>background</strong>, <strong>rotate</strong>, <strong>scale</strong>,
-                    amongst
-                    many others.</p>
+                <p>You can do many different transformations to your images:
+                    <ul>
+                        <li><em>blur ( int x, int y, int width, int height )</em> blur a square in the image</li>
+                        <li><em>crop ( int x, int y, int width, int height )</em> crop a part of the image</li>
+                        <li><em>face.blur ( )</em> to detect faces and blur those faces in the image</li>
+                        <li><em>face.detect ( int thickness )</em> to detect faces in the image, and draw a rectangle around them</li>
+                        <li><em>face.pixelate ( int dimension )</em> to detect faces in the image, and pixelate them inside the image</li>
+                        <li><em>format ( string format )</em> change the format of the image</li>
+                        <li><em>height ( int height )</em> resize the image proportionally, with the specified height</li>
+                        <li><em>pixelate ( int x, int y, int width, int height, int dimension )</em> pixelate a sqare inside the image</li>
+                        <li><em>resize ( int width, int height )</em> resize the image without keeping proportions, with the specified width and height</li>
+                        <li><em>square ( int x, int y, int width, int height, int red, int green, int blue, int alpha, int thickness )</em> draw a square in the image</li>
+                        <li><em>width ( int width )</em> resize the image proportionally, with the specified width</li>
+                    </ul>
+                </p>
 
-
-                <p><a href="https://github.com/flyimg/flyimg" target="_blank">Check the docs for more info</a>.</p>
+                <p><a href="https://github.com/kiboko-labs/flyimg" target="_blank">Check the docs for more info</a>.</p>
                 <p>Happy imaging!</p>
-            </div>
-
-            <div class="mastfoot">
-                <div class="inner">
-                    <p><a href="https://flyimg.io" target="_blank">Flyimg.io</a></p>
-                </div>
             </div>
 
         </div>

@@ -45,39 +45,46 @@ class DrawSquareFactory implements CommandFactoryInterface
             new Assert\All([
                 new Assert\Type('int'),
                 new Assert\GreaterThanOrEqual(1),
+                new Assert\NotBlank(),
             ]),
             new Assert\All([
                 new Assert\Type('int'),
                 new Assert\GreaterThanOrEqual(1),
+                new Assert\NotBlank(),
             ]),
             new Assert\All([
                 new Assert\Type('int'),
                 new Assert\GreaterThanOrEqual(1),
+                new Assert\NotBlank(),
             ]),
             new Assert\All([
                 new Assert\Type('int'),
                 new Assert\GreaterThanOrEqual(0),
                 new Assert\LessThanOrEqual(255),
+                new Assert\NotBlank(),
             ]),
             new Assert\All([
                 new Assert\Type('int'),
                 new Assert\GreaterThanOrEqual(0),
+                new Assert\NotBlank(),
             ]),
             new Assert\All([
                 new Assert\Type('int'),
                 new Assert\GreaterThanOrEqual(0),
+                new Assert\NotBlank(),
             ]),
             new Assert\All([
                 new Assert\Type('int'),
                 new Assert\GreaterThanOrEqual(0),
                 new Assert\LessThanOrEqual(255),
+                new Assert\NotBlank(),
             ]),
-            new Assert\Optional([
+            new Assert\All([
                 new Assert\Type('int'),
                 new Assert\GreaterThanOrEqual(0),
                 new Assert\LessThanOrEqual(100),
             ]),
-            new Assert\Optional([
+            new Assert\All([
                 new Assert\Type('int'),
                 new Assert\GreaterThanOrEqual(1),
             ]),
