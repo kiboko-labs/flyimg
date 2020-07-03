@@ -100,6 +100,33 @@ class ImageManipulator
     }
 
     /**
+     * @param string $filtersSpec
+     * @param string $sourceUrl
+     *
+     * @return ShortLivedTemporaryFile
+     *
+     * @throws FileExistsException
+     */
+    public function get(string $sourceUrl): FileInterface
+    {
+        $hash = $this->hash('', $sourceUrl);
+
+        if ($this->mountManager->has($hash)) {
+            return new FileReference($this->mountManager, $hash);
+        }
+
+        $temporaryImage = $this->localCopy($sourceUrl);
+
+//        $source = $this->imagine->open((string) $temporaryImage);
+
+//        $source->save((string) $temporaryImage);
+
+        $this->mountManager->copy($temporaryImage->toFlysystem(), $hash);
+
+        return $temporaryImage;
+    }
+
+    /**
      * @param string $source
      *
      * @return ShortLivedTemporaryFile

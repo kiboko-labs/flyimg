@@ -45,6 +45,27 @@ class PathExpressionController extends Controller
     }
 
     /**
+     * @param string $filtersSpec
+     * @param string $imageSrc
+     *
+     * @return Response
+     */
+    public function getAction(string $imageSrc = null): Response
+    {
+        try {
+            $file = $this->imageManipulator->get($imageSrc);
+        } catch (FileExistsException $e) {
+            return new Response($e->getMessage(), 500);
+        } catch (InvalidArgumentException $e) {
+            return new Response('', 404);
+        }
+
+        return new Response($file->read(), 200, [
+            'Content-Type' => $file->mimeType(),
+        ]);
+    }
+
+    /**
      * @param string $options
      * @param string $imageSrc
      *

@@ -28,10 +28,39 @@ services:
         resource: '../src/App/Controller/*'
         tags: ['controller.service_arguments']
 
+    Flyimg\App\Controller\FilterExpressionController:
+        arguments:
+            $imageManipulator: '@Flyimg\App\ImageManipulator.filter'
+
+    Flyimg\App\Controller\PathExpressionController:
+        arguments:
+            $imageManipulator: '@Flyimg\App\ImageManipulator.path'
+
+    Flyimg\App\ImageManipulator.path:
+        class: Flyimg\App\ImageManipulator
+        arguments:
+            $optionResolver: '@Flyimg\App\OptionResolver\PathResolver'
+            $mountManager: '@flyimg.mount_manager'
+            $realPath: '%local_root_path%'
+            $localPrefix: 'local'
+            $storePrefix: 'store'
+
+    Flyimg\App\ImageManipulator.filter:
+        class: Flyimg\App\ImageManipulator
+        arguments:
+            $optionResolver: '@Flyimg\App\OptionResolver\FilterResolver'
+            $mountManager: '@flyimg.mount_manager'
+            $realPath: '%local_root_path%'
+            $localPrefix: 'local'
+            $storePrefix: 'store'
+
     Flyimg\Image\FaceDetection\FaceDetectionInterface: '@Flyimg\Image\FaceDetection\FacedetectShell'
 
     Flyimg\App\OptionResolver\FilterResolver:
         factory: ['Flyimg\App\OptionResolver\FilterResolver', buildStandard]
+
+    Flyimg\App\OptionResolver\PathResolver:
+        factory: ['Flyimg\App\OptionResolver\PathResolver', buildStandard]
 
     Flyimg\App\OptionResolver\OptionResolverInterface: '@Flyimg\App\OptionResolver\FilterResolver'
 

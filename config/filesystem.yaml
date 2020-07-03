@@ -4,14 +4,6 @@ services:
 
     League\Flysystem\MountManager: '@flyimg.mount_manager'
 
-    Flyimg\App\ImageManipulator:
-        autowire: true
-        arguments:
-            $mountManager: '@flyimg.mount_manager'
-            $realPath: '%local_root_path%'
-            $localPrefix: 'local'
-            $storePrefix: 'store'
-
     flyimg.filesystem.local:
         class: League\Flysystem\Filesystem
         arguments:

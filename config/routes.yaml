@@ -8,6 +8,12 @@ default_expression_upload:
    requirements:
       imageSrc: .+
 
+default_expression_get:
+   path : /get/{imageSrc}
+   defaults: { _controller: 'Flyimg\App\Controller\PathExpressionController::getAction', imageSrc: '' }
+   requirements:
+      imageSrc: .+
+
 default_expression_path:
    path : /path/{options}/{imageSrc}
    defaults: { _controller: 'Flyimg\App\Controller\PathExpressionController::pathAction', imageSrc: '' }
