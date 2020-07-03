@@ -60,6 +60,7 @@ services:
     volumes:
       - ./:/var/www/html
       - cache:/var/www/html/var/cache
+      - temp:/var/www/html/var/tmp
     environment:
       - "I_AM_DEVELOPER_DISABLE_INDEX_IP_CHECK="
     restart: on-failure
@@ -73,6 +74,7 @@ services:
     volumes:
       - ./:/var/www/html
       - cache:/var/www/html/var/cache
+      - temp:/var/www/html/var/tmp
     environment:
       - "I_AM_DEVELOPER_DISABLE_INDEX_IP_CHECK="
     restart: on-failure
@@ -98,6 +100,7 @@ services:
     volumes:
       - ./:/var/www/html
       - cache:/var/www/html/var/cache
+      - temp:/var/www/html/var/tmp
       - $HOME/.ssh:/opt/docker/.ssh
       - $HOME/.composer:/opt/docker/.composer/
     environment:
@@ -118,6 +121,7 @@ services:
     volumes:
       - ./:/var/www/html
       - cache:/var/www/html/var/cache
+      - temp:/var/www/html/var/tmp
       - $HOME/.ssh:/opt/docker/.ssh
       - $HOME/.composer:/opt/docker/.composer/
     environment:
@@ -128,6 +132,12 @@ services:
 
 volumes:
   cache:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: "size=2048m,uid=1000,gid=1000"
+  temp:
     driver: local
     driver_opts:
       type: tmpfs

@@ -3,31 +3,55 @@ home:
    defaults: { _controller: 'Flyimg\App\Controller\DefaultController::indexAction' }
 
 default_expression_upload:
-   path : /upload/{options}/{imageSrc}
-   defaults: { _controller: 'Flyimg\App\Controller\PathExpressionController::uploadAction', imageSrc: '' }
+   path : /upload/{filtersSpec}/{imageSrc}
+   defaults: { _controller: 'Flyimg\App\Controller\ContentDeliveryController.%default_adapter%::uploadAction', imageSrc: '' }
    requirements:
       imageSrc: .+
 
 default_expression_get:
    path : /get/{imageSrc}
-   defaults: { _controller: 'Flyimg\App\Controller\PathExpressionController::getAction', imageSrc: '' }
+   defaults: { _controller: 'Flyimg\App\Controller\ContentDeliveryController.%default_adapter%::getAction', imageSrc: '' }
    requirements:
       imageSrc: .+
 
 default_expression_path:
-   path : /path/{options}/{imageSrc}
-   defaults: { _controller: 'Flyimg\App\Controller\PathExpressionController::pathAction', imageSrc: '' }
+   path : /path/{filtersSpec}/{imageSrc}
+   defaults: { _controller: 'Flyimg\App\Controller\ContentDeliveryController.%default_adapter%::pathAction', imageSrc: '' }
+   requirements:
+      imageSrc: .+
+
+cloudinary_expression_upload:
+   path : /cloudinary/upload/{filtersSpec}/{imageSrc}
+   defaults: { _controller: 'Flyimg\App\Controller\ContentDeliveryController.cloudinary::uploadAction', imageSrc: '' }
+   requirements:
+      imageSrc: .+
+
+cloudinary_expression_get:
+   path : /cloudinary/get/{imageSrc}
+   defaults: { _controller: 'Flyimg\App\Controller\ContentDeliveryController.cloudinary::getAction', imageSrc: '' }
+   requirements:
+      imageSrc: .+
+
+cloudinary_expression_path:
+   path : /cloudinary/path/{filtersSpec}/{imageSrc}
+   defaults: { _controller: 'Flyimg\App\Controller\ContentDeliveryController.cloudinary::pathAction', imageSrc: '' }
    requirements:
       imageSrc: .+
 
 filter_expression_upload:
-   path : /f/upload/{filtersSpec}/{imageSrc}
-   defaults: { _controller: 'Flyimg\App\Controller\FilterExpressionController::uploadAction', imageSrc: '' }
+   path : /filter/upload/{filtersSpec}/{imageSrc}
+   defaults: { _controller: 'Flyimg\App\Controller\ContentDeliveryController.filter::uploadAction', imageSrc: '' }
    requirements:
       imageSrc: .+
 
 filter_expression_path:
-   path : /f/path/{filtersSpec}/{imageSrc}
-   defaults: { _controller: 'Flyimg\App\Controller\FilterExpressionController::pathAction', imageSrc: '' }
+   path : /filter/path/{filtersSpec}/{imageSrc}
+   defaults: { _controller: 'Flyimg\App\Controller\ContentDeliveryController.filter::pathAction', imageSrc: '' }
+   requirements:
+      imageSrc: .+
+
+filter_expression_get:
+   path: /filter/get/{imageSrc}
+   defaults: { _controller: 'Flyimg\App\Controller\ContentDeliveryController.filter::getAction', imageSrc: '' }
    requirements:
       imageSrc: .+

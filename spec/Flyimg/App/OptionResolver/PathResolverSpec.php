@@ -2,7 +2,7 @@
 
 namespace spec\Flyimg\App\OptionResolver;
 
-use Flyimg\App\OptionResolver\PathResolver;
+use Flyimg\App\OptionResolver\CloudinaryResolver;
 use Flyimg\Image\Command\CommandFactoryInterface;
 use Flyimg\Image\Command\CommandInterface;
 use Flyimg\Image\CommandChain;
@@ -14,7 +14,7 @@ class PathResolverSpec extends ObjectBehavior
     {
         $this->beConstructedWith([]);
 
-        $this->shouldHaveType(PathResolver::class);
+        $this->shouldHaveType(CloudinaryResolver::class);
     }
 
     function it_should_call_proper_factory(

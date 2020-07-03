@@ -8,16 +8,12 @@ use League\Flysystem\FileExistsException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-class FilterExpressionController extends Controller
+class ContentDeliveryController extends Controller
 {
-    /**
-     * @var ImageManipulator
-     */
+    /** @var ImageManipulator */
     private $imageManipulator;
 
-    /**
-     * @param ImageManipulator $imageManipulator
-     */
+    /** @param ImageManipulator $imageManipulator */
     public function __construct(ImageManipulator $imageManipulator)
     {
         $this->imageManipulator = $imageManipulator;

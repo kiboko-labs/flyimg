@@ -9,7 +9,7 @@ use Flyimg\Image\Command\Factory as CommandFactory;
 use Flyimg\Image\FaceDetection\FaceDetectionInterface;
 use Imagine\Image\ImagineInterface;
 
-class PathResolver implements OptionResolverInterface
+class CloudinaryResolver implements OptionResolverInterface
 {
     /**
      * @var CommandFactoryInterface[]

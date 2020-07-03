@@ -15,6 +15,7 @@ services:
 
     Flyimg\App\:
         resource: '../src/App/*'
+        exclude: '../src/App/{ImageManipulator}'
 
     Flyimg\Http\:
         resource: '../src/Http/*'
@@ -26,20 +27,27 @@ services:
     # as action arguments even if you don't extend any base controller class
     Flyimg\App\Controller\:
         resource: '../src/App/Controller/*'
+        exclude: '../src/App/Controller/{ContentDeliveryController}.php'
         tags: ['controller.service_arguments']
 
-    Flyimg\App\Controller\FilterExpressionController:
+    Flyimg\App\Controller\ContentDeliveryController.filter:
+        class: Flyimg\App\Controller\ContentDeliveryController
         arguments:
             $imageManipulator: '@Flyimg\App\ImageManipulator.filter'
+        public: true
+        tags: ['controller.service_arguments']
 
-    Flyimg\App\Controller\PathExpressionController:
+    Flyimg\App\Controller\ContentDeliveryController.cloudinary:
+        class: Flyimg\App\Controller\ContentDeliveryController
         arguments:
-            $imageManipulator: '@Flyimg\App\ImageManipulator.path'
+            $imageManipulator: '@Flyimg\App\ImageManipulator.cloudinary'
+        public: true
+        tags: ['controller.service_arguments']
 
-    Flyimg\App\ImageManipulator.path:
+    Flyimg\App\ImageManipulator.cloudinary:
         class: Flyimg\App\ImageManipulator
         arguments:
-            $optionResolver: '@Flyimg\App\OptionResolver\PathResolver'
+            $optionResolver: '@Flyimg\App\OptionResolver\CloudinaryResolver'
             $mountManager: '@flyimg.mount_manager'
             $realPath: '%local_root_path%'
             $localPrefix: 'local'
@@ -54,13 +62,15 @@ services:
             $localPrefix: 'local'
             $storePrefix: 'store'
 
+    Flyimg\App\ImageManipulator: '@Flyimg\App\ImageManipulator.filter'
+
     Flyimg\Image\FaceDetection\FaceDetectionInterface: '@Flyimg\Image\FaceDetection\FacedetectShell'
 
     Flyimg\App\OptionResolver\FilterResolver:
         factory: ['Flyimg\App\OptionResolver\FilterResolver', buildStandard]
 
-    Flyimg\App\OptionResolver\PathResolver:
-        factory: ['Flyimg\App\OptionResolver\PathResolver', buildStandard]
+    Flyimg\App\OptionResolver\CloudinaryResolver:
+        factory: ['Flyimg\App\OptionResolver\CloudinaryResolver', buildStandard]
 
     Flyimg\App\OptionResolver\OptionResolverInterface: '@Flyimg\App\OptionResolver\FilterResolver'
 
