@@ -1,0 +1,67 @@
+services:
+  flyimg.adapter.local:
+    class: League\Flysystem\Adapter\Local
+    arguments:
+      $root: '%local_root_path%'
+
+  flyimg.adapter.store:
+    class: League\Flysystem\Adapter\Local
+    arguments:
+      $root: '%kernel.project_dir%/public/store'
+
+  flyimg.security.http:
+    class: Flyimg\Http\Security\AllowedDomainsSecurityRule
+    arguments:
+      - '%allowed_domains%'
+
+  flyimg.adapter.http:
+    class: Flyimg\Http\Adapter
+    arguments:
+      $securityRule: '@flyimg.security.http'
+      $context: []
+      $isSecure: false
+
+  flyimg.adapter.https:
+    class: Flyimg\Http\Adapter
+    arguments:
+      $securityRule: '@flyimg.security.http'
+      $context: []
+      $isSecure: true
+
+  flyimg.adapter.akeneo:
+    class: Flyimg\Akeneo\Adapter
+    arguments:
+      $client: '@Akeneo\Pim\ApiClient\AkeneoPimClient'
+
+  Akeneo\Pim\ApiClient\AkeneoPimClientBuilder:
+    arguments:
+      - '%akeneo.url%'
+
+  Akeneo\Pim\ApiClient\AkeneoPimClient:
+    factory: [ '@Akeneo\Pim\ApiClient\AkeneoPimClientBuilder', 'buildAuthenticatedByPassword' ]
+    arguments:
+      - '%akeneo.client_id%'
+      - '%akeneo.client_secret%'
+      - '%akeneo.username%'
+      - '%akeneo.password%'
+
+  flyimg.filesystem.http:
+    class: League\Flysystem\Filesystem
+    arguments:
+      - '@flyimg.adapter.http'
+    tags:
+      - { name: flyimg.filesystem, alias: http }
+
+  flyimg.filesystem.https:
+    class: League\Flysystem\Filesystem
+    arguments:
+      - '@flyimg.adapter.https'
+    tags:
+      - { name: flyimg.filesystem, alias: https }
+
+  flyimg.filesystem.akeneo:
+    class: League\Flysystem\Filesystem
+    arguments:
+      - '@flyimg.adapter.akeneo'
+    tags:
+      - { name: flyimg.filesystem, alias: akeneo }

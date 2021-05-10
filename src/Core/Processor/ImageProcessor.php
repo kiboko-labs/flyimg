@@ -5,6 +5,7 @@ namespace Core\Processor;
 use Core\Entity\Command;
 use Core\Entity\Image\OutputImage;
 use Core\Entity\ImageMetaInfo;
+use Imagine\Image\ImageInterface;
 
 /**
  * Class ImageProcessor
@@ -41,29 +42,29 @@ class ImageProcessor extends Processor
     /**
      * Save new FileName based on source file and list of options
      *
-     * @param OutputImage $outputImage
+     * @param ImageInterface $image
      *
-     * @return OutputImage
+     * @return ImageInterface
      * @throws \Exception
      */
-    public function processNewImage(OutputImage $outputImage): OutputImage
+    public function processNewImage(ImageInterface $image): ImageInterface
     {
-        $this->sourceImageInfo = $outputImage->getInputImage()->sourceImageInfo();
-        $this->options = $outputImage->getInputImage()->optionsBag();
-        $command = $this->generateCommand($outputImage);
+        $this->sourceImageInfo = $image->metadata();
+        $this->options = $image->getInputImage()->optionsBag();
+        $command = $this->generateCommand($image);
         $this->execute($command);
 
-        return $outputImage;
+        return $image;
     }
 
     /**
      * Generate Command string bases on options
      *
-     * @param OutputImage $outputImage
+     * @param ImageInterface $outputImage
      *
      * @return Command
      */
-    protected function generateCommand(OutputImage $outputImage): Command
+    protected function generateCommand(ImageInterface $outputImage): Command
     {
         $command = new Command(self::IM_CONVERT_COMMAND);
 
@@ -156,11 +157,11 @@ class ImageProcessor extends Processor
     /**
      * Gets the source image path and adds any extra modifiers to the string
      *
-     * @param  OutputImage $outputImage
+     * @param  ImageInterface $outputImage
      *
      * @return string                   Path of the source file to be used in the conversion command
      */
-    protected function getSourceImagePath(OutputImage $outputImage): string
+    protected function getSourceImagePath(ImageInterface $outputImage): string
     {
         $tmpFileName = $this->sourceImageInfo->path();
 
@@ -180,11 +181,11 @@ class ImageProcessor extends Processor
     /**
      * Apply the Quality processor based on options
      *
-     * @param OutputImage $outputImage
+     * @param ImageInterface $outputImage
      *
      * @return string
      */
-    protected function calculateQuality(OutputImage $outputImage): string
+    protected function calculateQuality(ImageInterface $outputImage): string
     {
         $quality = $outputImage->extractKey('quality');
 

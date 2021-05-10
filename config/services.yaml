@@ -1,0 +1,5 @@
+imports:
+    - { resource: parameters.yaml }
+    - { resource: autowire.yaml }
+    - { resource: filesystem.yaml }
+    - { resource: mounts.yaml }

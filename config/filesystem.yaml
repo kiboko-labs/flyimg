@@ -1,0 +1,19 @@
+services:
+    flyimg.mount_manager:
+        class: League\Flysystem\MountManager
+
+    League\Flysystem\MountManager: '@flyimg.mount_manager'
+
+    flyimg.filesystem.local:
+        class: League\Flysystem\Filesystem
+        arguments:
+            - '@flyimg.adapter.local'
+        tags:
+            - { name: flyimg.filesystem, alias: local }
+
+    flyimg.filesystem.store:
+        class: League\Flysystem\Filesystem
+        arguments:
+            - '@flyimg.adapter.store'
+        tags:
+            - { name: flyimg.filesystem, alias: store }

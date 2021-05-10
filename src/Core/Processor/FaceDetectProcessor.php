@@ -46,6 +46,7 @@ class FaceDetectProcessor extends Processor
      */
     public function blurFaces(InputImage $inputImage)
     {
+        $inputImage->file();
         if (!is_executable(self::FACEDETECT_COMMAND)) {
             return;
         }

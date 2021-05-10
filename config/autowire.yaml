@@ -1,0 +1,80 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    Core\:
+        resource: '../src/Core/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests}'
+
+    Flyimg\App\:
+        resource: '../src/App/*'
+        exclude: '../src/App/{ImageManipulator}'
+
+    Flyimg\Http\:
+        resource: '../src/Http/*'
+
+    Flyimg\Image\:
+        resource: '../src/Image/*'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    Flyimg\App\Controller\:
+        resource: '../src/App/Controller/*'
+        exclude: '../src/App/Controller/{ContentDeliveryController}.php'
+        tags: ['controller.service_arguments']
+
+    Flyimg\App\Controller\ContentDeliveryController.filter:
+        class: Flyimg\App\Controller\ContentDeliveryController
+        arguments:
+            $imageManipulator: '@Flyimg\App\ImageManipulator.filter'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Flyimg\App\Controller\ContentDeliveryController.cloudinary:
+        class: Flyimg\App\Controller\ContentDeliveryController
+        arguments:
+            $imageManipulator: '@Flyimg\App\ImageManipulator.cloudinary'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Flyimg\App\ImageManipulator.cloudinary:
+        class: Flyimg\App\ImageManipulator
+        arguments:
+            $optionResolver: '@Flyimg\App\OptionResolver\CloudinaryResolver'
+            $mountManager: '@flyimg.mount_manager'
+            $realPath: '%local_root_path%'
+            $localPrefix: 'local'
+            $storePrefix: 'store'
+
+    Flyimg\App\ImageManipulator.filter:
+        class: Flyimg\App\ImageManipulator
+        arguments:
+            $optionResolver: '@Flyimg\App\OptionResolver\FilterResolver'
+            $mountManager: '@flyimg.mount_manager'
+            $realPath: '%local_root_path%'
+            $localPrefix: 'local'
+            $storePrefix: 'store'
+
+    Flyimg\App\ImageManipulator: '@Flyimg\App\ImageManipulator.filter'
+
+    Flyimg\Image\FaceDetection\FaceDetectionInterface: '@Flyimg\Image\FaceDetection\FacedetectShell'
+
+    Flyimg\App\OptionResolver\FilterResolver:
+        factory: ['Flyimg\App\OptionResolver\FilterResolver', buildStandard]
+
+    Flyimg\App\OptionResolver\CloudinaryResolver:
+        factory: ['Flyimg\App\OptionResolver\CloudinaryResolver', buildStandard]
+
+    Flyimg\App\OptionResolver\OptionResolverInterface: '@Flyimg\App\OptionResolver\FilterResolver'
+
+    Imagine\Imagick\Imagine:
+        autowire: true
+
+    Imagine\Image\ImagineInterface: '@Imagine\Imagick\Imagine'

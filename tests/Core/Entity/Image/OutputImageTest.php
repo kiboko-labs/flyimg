@@ -52,7 +52,7 @@ class OutputImageTest extends BaseTest
             'extract-bottom-x' => null,
             'extract-bottom-y' => null,
         ];
-        $optionsBag = new OptionsBag($this->ImageHandler->appParameters(), self::OPTION_URL);
+        $optionsBag = new OptionsBag($this->imageHandler->appParameters(), self::OPTION_URL);
         $inputImage = new InputImage($optionsBag, self::JPG_TEST_IMAGE);
 
         $this->assertEquals($inputImage->optionsBag()->asArray(), $expectedParseArray);
@@ -63,12 +63,12 @@ class OutputImageTest extends BaseTest
      */
     public function testSaveToTemporaryFile()
     {
-        $optionsBag = new OptionsBag($this->ImageHandler->appParameters(), self::OPTION_URL);
+        $optionsBag = new OptionsBag($this->imageHandler->appParameters(), self::OPTION_URL);
         $inputImage = new InputImage($optionsBag, self::JPG_TEST_IMAGE);
         $image = new OutputImage($inputImage);
         $this->generatedImage[] = $image;
 
-        $this->assertFileExists($image->getInputImage()->sourceImagePath());
+        $this->assertFileExists($image->getInputImage()->sourcePath());
     }
 
     /**
@@ -76,19 +76,19 @@ class OutputImageTest extends BaseTest
      */
     public function testGenerateFilesName()
     {
-        $optionsBag = new OptionsBag($this->ImageHandler->appParameters(), self::OPTION_URL);
+        $optionsBag = new OptionsBag($this->imageHandler->appParameters(), self::OPTION_URL);
         $inputImage = new InputImage($optionsBag, self::JPG_TEST_IMAGE);
         $image = new OutputImage($inputImage);
 
-        $optionsBag2 = new OptionsBag($this->ImageHandler->appParameters(), self::OPTION_URL);
+        $optionsBag2 = new OptionsBag($this->imageHandler->appParameters(), self::OPTION_URL);
         $inputImage2 = new InputImage($optionsBag2, self::JPG_TEST_IMAGE);
         $image2 = new OutputImage($inputImage2);
 
         $this->generatedImage[] = $image2;
         $this->generatedImage[] = $image;
 
-        $this->assertEquals($image2->getOutputImageName(), $image->getOutputImageName());
-        $this->assertNotEquals($image2->getOutputImagePath(), $image->getOutputImagePath());
+        $this->assertEquals($image2->getOutputName(), $image->getOutputName());
+        $this->assertNotEquals($image2->getPath(), $image->getPath());
     }
 
     /**
@@ -96,7 +96,7 @@ class OutputImageTest extends BaseTest
      */
     public function testExtractByKey()
     {
-        $optionsBag = new OptionsBag($this->ImageHandler->appParameters(), self::OPTION_URL);
+        $optionsBag = new OptionsBag($this->imageHandler->appParameters(), self::OPTION_URL);
         $inputImage = new InputImage($optionsBag, self::JPG_TEST_IMAGE);
         $image = new OutputImage($inputImage);
 
